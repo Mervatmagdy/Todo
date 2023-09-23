@@ -1,0 +1,22 @@
+{
+"to_do_title":"قائمة المهام",
+"done":"تم",
+"delete":"حذف",
+"add_new_task":"اضافة مهمة جديدة",
+"enter_your_task":"أدخل مهمتك",
+"enter_your_description":"أدخل التفاصيل ",
+"select_time":"اختر الوقت",
+"edit_task":"تعديل مهمة",
+"this_is_title":"هذا هو العنوان",
+"task_details":"تفاصيل المهمة",
+"setting_title":"الاعدادات",
+"language":"اللغة",
+"english":"الانجليزية",
+"arabic":"العربية",
+"mode":"النمط",
+"light":"مضىء",
+"dark":"ليلي",
+"error_title":"الرجاء إدخال عنوان المهمة",
+"error_description":"الرجاء إدخال تفاصيل المهمة",
+"sava_changes":"حفظ التغييرات"
+}

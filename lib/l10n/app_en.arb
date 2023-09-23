@@ -1,0 +1,22 @@
+{
+  "to_do_title":"To Do Title",
+"done":"Done",
+"delete":"Delete",
+"add_new_task":"Add new Task",
+"enter_your_task":"enter your task",
+"enter_your_description":"enter your description",
+"select_time":"Select time",
+"edit_task":"Edit Task",
+"this_is_title":"This is title",
+"task_details":"Task details",
+"setting_title":"Settings",
+"language":"Language",
+"english":"English",
+"arabic":"Arabic",
+"mode":"Mode",
+"light":"Light",
+"dark":"Dark",
+"error_title":"Please Enter Title Task",
+"error_description":"Please Enter Description Task",
+"sava_changes":"Save Changes"
+}
