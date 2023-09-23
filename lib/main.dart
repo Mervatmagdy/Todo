@@ -7,6 +7,8 @@ import 'package:todo/Provider/app_config_provider.dart';
 import 'package:todo/task_list/edit_task_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Home/splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppConfigProvider.init();
@@ -25,8 +27,9 @@ class MyApp extends StatelessWidget {
         locale:Locale(AppConfigProvider.getChangeLanguage()??provider.appLanguage),
         debugShowCheckedModeBanner: false,
         theme:MyTheme.lightTheme,
-        initialRoute:HomeScreen.routeName ,
+        initialRoute:SplashScreen.routeName ,
         routes: {
+          SplashScreen.routeName:(context) => SplashScreen(),
           HomeScreen.routeName:(context) => HomeScreen(),
           EditTaskItem.routeName:(context) => EditTaskItem()
         }
