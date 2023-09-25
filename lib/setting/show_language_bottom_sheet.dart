@@ -22,7 +22,7 @@ class _ShowLanguageBottomSheetState extends State<ShowLanguageBottomSheet> {
               onTap: (){
               provider.changeLanguage('en');
               },
-             child: AppConfigProvider.getChangeLanguage()=='en'?getSelectedLanguage(AppLocalizations.of(context)!.english):
+             child: provider.appLanguage=='en'?getSelectedLanguage(AppLocalizations.of(context)!.english):
              getUnSelectedLanguage(AppLocalizations.of(context)!.english),
            ),
             InkWell(
