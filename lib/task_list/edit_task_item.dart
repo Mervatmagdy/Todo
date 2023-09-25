@@ -52,7 +52,7 @@ class _EditTaskItemState extends State<EditTaskItem> {
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
                               validator:(value) {
-                                if(value==null){
+                                if(value==""){
                                   return AppLocalizations.of(context)!.error_title;
                                 }return null;
                               },
@@ -65,7 +65,7 @@ class _EditTaskItemState extends State<EditTaskItem> {
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
                               validator:(value) {
-                                if(value==null){
+                                if(value==""){
                                   return AppLocalizations.of(context)!.error_description;
                                 }return null;
                               },
@@ -109,7 +109,9 @@ class _EditTaskItemState extends State<EditTaskItem> {
                      style: ButtonStyle(
                        padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal:60,vertical:15)),
                      ),
-                      onPressed: (){}, child:Text(AppLocalizations.of(context)!.sava_changes,style: Theme.of(context).textTheme.titleSmall!.copyWith(color:MyTheme.whiteColor),))
+                      onPressed: (){
+                       editTask();
+                      }, child:Text(AppLocalizations.of(context)!.sava_changes,style: Theme.of(context).textTheme.titleSmall!.copyWith(color:MyTheme.whiteColor),))
                 ],
               ),
             ),
@@ -129,12 +131,11 @@ class _EditTaskItemState extends State<EditTaskItem> {
     }
   }
 
-  void addTask(){
+  void editTask(){
     if(formkey.currentState?.validate()==true){
       setState(() {
 
       });
-      return;
     }
   }
 }

@@ -33,7 +33,7 @@ var provider=Provider.of<AppConfigProvider>(context);
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     validator:(value) {
-                      if(value==null){
+                      if(value==''){
                         return AppLocalizations.of(context)!.error_title;
                       }return null;
                     },
@@ -48,7 +48,7 @@ var provider=Provider.of<AppConfigProvider>(context);
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     validator:(value) {
-                      if(value==null){
+                      if(value==""){
                         return AppLocalizations.of(context)!.error_description;
                       }return null;
                     },
@@ -124,8 +124,9 @@ var provider=Provider.of<AppConfigProvider>(context);
   }
   void addTask(){
     if(formkey.currentState?.validate()==true){
+      setState(() {
 
-      return;
+      });
     }
   }
 }
