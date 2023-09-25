@@ -22,11 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget>tabs=[TaskList(),Setting()];
     return Scaffold(
         bottomNavigationBar:BottomAppBar(
+          color:provider.isDarkMode()?MyTheme.blackDark:
+           MyTheme.whiteColor,
             notchMargin:8,
             shape:CircularNotchedRectangle(),
             child: BottomNavigationBar(
-              backgroundColor:provider.isDarkMode()?MyTheme.blackDark:
-                MyTheme.whiteColor,
+              // backgroundColor:provider.isDarkMode()?MyTheme.blackDark:
+              //   MyTheme.whiteColor,
               currentIndex:selected,
               onTap: (index){
                 selected=index;
