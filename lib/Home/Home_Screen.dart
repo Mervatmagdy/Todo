@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               right: 0.0,
               child: AppBar(
                   title:Padding(
-                    padding: const EdgeInsets.only(bottom:60,left:20),
+                    padding:  EdgeInsets.only(bottom:60,left:20),
                     child: Text(AppLocalizations.of(context)!.to_do_title,style:Theme.of(context).textTheme.titleLarge,),
                   ))),
           tabs[selected]

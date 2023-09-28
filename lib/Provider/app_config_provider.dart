@@ -1,6 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../modal/firebase_utils.dart';
+import '../modal/task.dart';
 class AppConfigProvider extends ChangeNotifier{
+  List<Task>taskList=[];
+  Future<void> getAllTaskFormFirebase() async {
+    QuerySnapshot<Task> getTask=await FirebaseUtils.getTaskCollection().get();
+    taskList=getTask.docs.map((doc) {
+      return doc.data();
+    },
+    ).toList();
+    notifyListeners();
+  }
   static late SharedPreferences prefs;
 String appLanguage='en';
 late ThemeMode appTheme=getChangeTheming();

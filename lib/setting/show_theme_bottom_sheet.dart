@@ -57,7 +57,7 @@ class _ShowThemeBottomSheetState extends State<ShowThemeBottomSheet> {
       padding: const EdgeInsets.all(12),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(theme,style:Theme.of(context).textTheme.titleSmall,),
+          Text(theme,style:Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight:FontWeight.normal),),
 
         ],
       ),

@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,12 +9,21 @@ import 'package:todo/Provider/app_config_provider.dart';
 import 'package:todo/task_list/edit_task_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'Home/splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-      await AppConfigProvider.init();
+  await AppConfigProvider.init();
+  await Firebase.initializeApp(
+
+  );
+
+  FirebaseFirestore.instance.settings =
+      Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
+  await FirebaseFirestore.instance.disableNetwork();
+
+
   runApp(ChangeNotifierProvider(create: (context) => AppConfigProvider(),
      child: MyApp()));
 }
