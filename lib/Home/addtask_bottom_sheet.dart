@@ -142,7 +142,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   showCalendar() async {
     var chosenDate = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate:selectedDate,
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(Duration(days: 365)));
     if (chosenDate != null) {

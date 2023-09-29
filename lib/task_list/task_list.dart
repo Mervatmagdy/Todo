@@ -15,12 +15,12 @@ class _TaskListState extends State<TaskList> {
   // late Task task;
   @override
   Widget build(BuildContext context) {
-   var provider=Provider.of<AppConfigProvider>(context);
-    if(provider.taskList.isEmpty){
+    var provider = Provider.of<AppConfigProvider>(context);
+    if (provider.taskList.isEmpty) {
       provider.getAllTaskFormFirebase();
     }
     return Padding(
-      padding:  EdgeInsets.only(top:100),
+      padding: EdgeInsets.only(top: 100),
       child: Column(
         children: [
           CalendarTimeline(
@@ -31,22 +31,25 @@ class _TaskListState extends State<TaskList> {
             leftMargin: 10,
             monthColor: MyTheme.blackColor,
             dayColor: MyTheme.blackColor,
-            activeDayColor:provider.isDarkMode()?MyTheme.whiteColor:MyTheme.primaryColor,
-            activeBackgroundDayColor:provider.isDarkMode()?MyTheme.blackDark: MyTheme.whiteColor,
+            activeDayColor: provider.isDarkMode()
+                ? MyTheme.whiteColor
+                : MyTheme.primaryColor,
+            activeBackgroundDayColor:
+                provider.isDarkMode() ? MyTheme.blackDark : MyTheme.whiteColor,
             dotsColor: MyTheme.whiteColor,
             selectableDayPredicate: (date) => true,
             locale: 'en_ISO',
           ),
           Expanded(
               child: ListView.builder(
-                  itemBuilder:(context, index) {
-                    return TaskWidgetItem(tasks:provider.taskList[index],);
+                  itemBuilder: (context, index) {
+                    return TaskWidgetItem(
+                      tasks: provider.taskList[index],
+                    );
                   },
-                  itemCount:provider.taskList.length))
+                  itemCount: provider.taskList.length))
         ],
       ),
     );
   }
-
-
 }

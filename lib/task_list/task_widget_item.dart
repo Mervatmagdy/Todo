@@ -50,7 +50,7 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () {
-            Navigator.of(context).pushNamed(EditTaskItem.routeName);
+            Navigator.of(context).pushNamed(EditTaskItem.routeName,arguments:widget.tasks);
           },
           child: Container(
             padding: EdgeInsets.all(15),

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../modal/firebase_utils.dart';
 import '../modal/task.dart';
 class AppConfigProvider extends ChangeNotifier{
@@ -11,8 +10,9 @@ class AppConfigProvider extends ChangeNotifier{
     QuerySnapshot<Task> getTask=await FirebaseUtils.getTaskCollection().get();
     taskList=getTask.docs.map((doc) {
       return doc.data();
-    },
+    }
     ).toList();
+
     notifyListeners();
   }
   bool isDone(Task task){
