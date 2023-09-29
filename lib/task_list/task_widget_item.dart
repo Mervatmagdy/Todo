@@ -48,7 +48,7 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
           ],
         ),
         child: InkWell(
-
+          borderRadius: BorderRadius.circular(20),
           onTap: () {
             Navigator.of(context).pushNamed(EditTaskItem.routeName);
           },
@@ -66,7 +66,7 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
               children: [
                 Container(
                   // margin: EdgeInsets.all(12),
-                  color:widget.tasks.isDone==true?MyTheme.greenColor:MyTheme.primaryColor,
+                  color:provider.isDone(widget.tasks)?MyTheme.greenColor:MyTheme.primaryColor,
                   width: 4,
                   height: 80,
                 ),
@@ -80,7 +80,7 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .copyWith(color:widget.tasks.isDone==true?MyTheme.greenColor:MyTheme.primaryColor)),
+                                .copyWith(color:provider.isDone(widget.tasks)?MyTheme.greenColor:MyTheme.primaryColor)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
@@ -91,19 +91,19 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed:widget.tasks.isDone==true?null:() {
+                  onPressed:provider.isDone(widget.tasks)?null:() {
                       FirebaseUtils.updateDoneTaskFormFireStore(widget.tasks).
                       timeout(Duration(milliseconds:0),onTimeout:(){
                         print('task is done successfully');
                         provider.getAllTaskFormFirebase();
                       });
                   },
-                  child: widget.tasks.isDone==true?
+                  child: provider.isDone(widget.tasks)?
                       Text('Done!',style:Theme.of(context).textTheme.titleSmall!.copyWith(color:MyTheme.greenColor,fontSize:22),):Icon(Icons.check, size: 30),
                   style: ButtonStyle(
                     elevation: MaterialStatePropertyAll(0),
                       backgroundColor:
-                          MaterialStatePropertyAll(widget.tasks.isDone==true?Colors.transparent:MyTheme.primaryColor),
+                          MaterialStatePropertyAll(provider.isDone(widget.tasks)?Colors.transparent:MyTheme.primaryColor),
                       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(11)))),
                 ),

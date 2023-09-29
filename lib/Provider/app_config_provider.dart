@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../modal/firebase_utils.dart';
 import '../modal/task.dart';
 class AppConfigProvider extends ChangeNotifier{
+  // late Task task;
   List<Task>taskList=[];
   Future<void> getAllTaskFormFirebase() async {
     QuerySnapshot<Task> getTask=await FirebaseUtils.getTaskCollection().get();
@@ -13,6 +14,9 @@ class AppConfigProvider extends ChangeNotifier{
     },
     ).toList();
     notifyListeners();
+  }
+  bool isDone(Task task){
+    return task.isDone==true;
   }
   static late SharedPreferences prefs;
 String appLanguage='en';
