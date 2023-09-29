@@ -24,10 +24,10 @@ class _TaskListState extends State<TaskList> {
       child: Column(
         children: [
           CalendarTimeline(
-            initialDate: DateTime.now(),
+            initialDate:provider.selectDate,
             firstDate: DateTime.now()..subtract(Duration(days: 365)),
             lastDate: DateTime.now().add(Duration(days: 365)),
-            onDateSelected: (date) => '',
+            onDateSelected: (date) =>provider.getChangeDate(date),
             leftMargin: 10,
             monthColor: MyTheme.blackColor,
             dayColor: MyTheme.blackColor,
@@ -36,7 +36,9 @@ class _TaskListState extends State<TaskList> {
                 : MyTheme.primaryColor,
             activeBackgroundDayColor:
                 provider.isDarkMode() ? MyTheme.blackDark : MyTheme.whiteColor,
-            dotsColor: MyTheme.whiteColor,
+            dotsColor: provider.isDarkMode()
+                ? MyTheme.whiteColor
+                : MyTheme.primaryColor,
             selectableDayPredicate: (date) => true,
             locale: 'en_ISO',
           ),
