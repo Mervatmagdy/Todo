@@ -60,7 +60,7 @@ class _SettingState extends State<Setting> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          provider.appLanguage == 'en'
+                          provider.appLanguage== 'en'
                               ? AppLocalizations.of(context)!.english
                               : AppLocalizations.of(context)!.arabic,
                           style: Theme.of(context)

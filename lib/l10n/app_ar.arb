@@ -18,5 +18,9 @@
 "dark":"ليلي",
 "error_title":"الرجاء إدخال عنوان المهمة",
 "error_description":"الرجاء إدخال تفاصيل المهمة",
-"sava_changes":"حفظ التغييرات"
+"sava_changes":"حفظ التغييرات",
+"task_added_success":"تمت إضافة المهمة بنجاح",
+"task_delete":"تم حذف المهمة بنجاح",
+"task_update_success":"تم تحديث المهمة بنجاح",
+"done":"تم !"
 }

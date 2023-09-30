@@ -42,7 +42,7 @@ class AppConfigProvider extends ChangeNotifier {
   }
 
   static late SharedPreferences prefs;
-  String appLanguage = 'en';
+  late String appLanguage =getChangeLanguage()??"en";
   late ThemeMode appTheme = getChangeTheming();
   Future<void> changeLanguage(String newLanguage) async {
     if (appLanguage == newLanguage) {

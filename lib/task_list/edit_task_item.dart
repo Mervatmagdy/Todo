@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 import 'package:todo/MyTheme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/Provider/app_config_provider.dart';
@@ -22,7 +23,7 @@ late String? description=args.description;
 late AppConfigProvider provider;
   @override
   Widget build(BuildContext context) {
-
+ToastContext().init(context);
      args = ModalRoute.of(context)?.settings.arguments as Task;
      provider = Provider.of<AppConfigProvider>(context);
     return Scaffold(
@@ -180,7 +181,7 @@ late AppConfigProvider provider;
       args.dateTime=selectedDate;
     FirebaseUtils.updateTaskFormFireStore(args).
     timeout(Duration(milliseconds: 500),onTimeout:() {
-      print("task is updated");
+      Toast.show(AppLocalizations.of(context)!.task_update_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
       provider.getAllTaskFormFirebase();
       Navigator.pop(context);
     },);

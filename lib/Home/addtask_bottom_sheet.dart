@@ -6,13 +6,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/Provider/app_config_provider.dart';
 import 'package:todo/modal/firebase_utils.dart';
 import 'package:todo/modal/task.dart';
+import 'package:toast/toast.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
+
   @override
   State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
 }
 
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
+
   late AppConfigProvider provider;
   String title = '';
   String description = '';
@@ -20,7 +23,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   var formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-     provider = Provider.of<AppConfigProvider>(context);
+    ToastContext().init(context);
+    provider = Provider.of<AppConfigProvider>(context);
     return SingleChildScrollView(
       child: Container(
         color: provider.isDarkMode() ? MyTheme.blackDark : MyTheme.whiteColor,
@@ -40,7 +44,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         onChanged: (text) {
-                          title=text;
+                          title = text;
                         },
                         validator: (value) {
                           if (value == '') {
@@ -66,7 +70,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         onChanged: (text) {
-                          description=text;
+                          description = text;
                         },
                         validator: (value) {
                           if (value == "") {
@@ -77,7 +81,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         },
                         maxLines: 4,
                         minLines: 2,
-                       // maxLengthEnforcement:MaxLengthEnforcement.none,
+                        // maxLengthEnforcement:MaxLengthEnforcement.none,
                         // textInputAction: TextInputAction.newline,
                         // maxLength:10,
                         decoration: InputDecoration(
@@ -142,7 +146,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   showCalendar() async {
     var chosenDate = await showDatePicker(
         context: context,
-        initialDate:selectedDate,
+        initialDate: selectedDate,
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(Duration(days: 365)));
     if (chosenDate != null) {
@@ -152,17 +156,17 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
   void addTask() {
     if (formkey.currentState?.validate() == true) {
-      Task task=Task(title: title, dateTime:selectedDate, description: description);
+      Task task =
+          Task(title: title, dateTime: selectedDate, description: description);
       FirebaseUtils.addTaskToFireStore(task).timeout(
-        Duration(milliseconds: 500),onTimeout: () {
-        print('task added successfully');
-        provider.getAllTaskFormFirebase();
-        Navigator.pop(context);
+        Duration(milliseconds: 500),
+        onTimeout: () {
+          Toast.show(AppLocalizations.of(context)!.task_added_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
+          provider.getAllTaskFormFirebase();
+          Navigator.pop(context);
         },
       );
 
-
     }
-
   }
 }

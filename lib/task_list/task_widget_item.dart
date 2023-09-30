@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 import 'package:todo/MyTheme.dart';
 import 'package:todo/Provider/app_config_provider.dart';
 import 'package:todo/modal/firebase_utils.dart';
@@ -17,8 +18,10 @@ class TaskWidgetItem extends StatefulWidget {
 }
 
 class _TaskWidgetItemState extends State<TaskWidgetItem> {
+
   @override
   Widget build(BuildContext context) {
+ToastContext().init(context);
     var provider = Provider.of<AppConfigProvider>(context);
     return Padding(
       padding: EdgeInsets.all(9.0),
@@ -26,7 +29,7 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
         startActionPane: ActionPane(
           extentRatio: 0.25,
           // A motion is a widget used to control how the pane animates.
-          motion: StretchMotion(),
+          motion: ScrollMotion(),
           children: [
             // A SlidableAction can have an icon and/or a label.
             SlidableAction(
@@ -34,7 +37,7 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
               onPressed: (tasks) {
                 FirebaseUtils.deleteTaskFromFireStore(widget.tasks).timeout(
                   Duration(milliseconds:0),
-                  onTimeout: () { print('task delete successfully');
+                  onTimeout: () {  Toast.show(AppLocalizations.of(context)!.task_delete, duration: Toast.lengthShort, gravity:  Toast.bottom);
                   provider.getAllTaskFormFirebase();
                   }
                 );
@@ -94,12 +97,11 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
                   onPressed:provider.isDone(widget.tasks)?null:() {
                       FirebaseUtils.updateDoneTaskFormFireStore(widget.tasks).
                       timeout(Duration(milliseconds:0),onTimeout:(){
-                        print('task is done successfully');
                         provider.getAllTaskFormFirebase();
                       });
                   },
                   child: provider.isDone(widget.tasks)?
-                      Text('Done!',style:Theme.of(context).textTheme.titleSmall!.copyWith(color:MyTheme.greenColor,fontSize:22),):Icon(Icons.check, size: 30),
+                      Text(AppLocalizations.of(context)!.done,style:Theme.of(context).textTheme.titleSmall!.copyWith(color:MyTheme.greenColor,fontSize:22),):Icon(Icons.check, size: 30),
                   style: ButtonStyle(
                     elevation: MaterialStatePropertyAll(0),
                       backgroundColor:

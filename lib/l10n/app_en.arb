@@ -18,5 +18,9 @@
 "dark":"Dark",
 "error_title":"Please Enter Title Task",
 "error_description":"Please Enter Description Task",
-"sava_changes":"Save Changes"
+"sava_changes":"Save Changes",
+"task_added_success":"Task added successfully",
+"task_delete":"Task deleted successfully",
+"task_update_success":"Task updated successfully",
+"done":"Done !"
 }

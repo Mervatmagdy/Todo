@@ -29,7 +29,7 @@ class _ShowLanguageBottomSheetState extends State<ShowLanguageBottomSheet> {
                onTap: () {
                  provider.changeLanguage('ar');
                },
-              child:AppConfigProvider.getChangeLanguage()=='ar'?getSelectedLanguage(AppLocalizations.of(context)!.arabic):
+              child:provider.appLanguage=='ar'?getSelectedLanguage(AppLocalizations.of(context)!.arabic):
               getUnSelectedLanguage(AppLocalizations.of(context)!.arabic),
             )
           ],
@@ -55,7 +55,6 @@ Widget getUnSelectedLanguage(language){
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(language,style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight:FontWeight.normal),),
-          Icon(Icons.check)
         ],
       ),
     );

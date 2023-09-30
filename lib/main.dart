@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 import 'package:todo/Home/Home_Screen.dart';
 import 'package:todo/MyTheme.dart';
 import 'package:todo/Provider/app_config_provider.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       darkTheme:MyTheme.darkTheme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        locale:Locale(AppConfigProvider.getChangeLanguage()??provider.appLanguage),
+        locale:Locale(provider.appLanguage),
         debugShowCheckedModeBanner: false,
         theme:MyTheme.lightTheme,
         initialRoute:SplashScreen.routeName ,
