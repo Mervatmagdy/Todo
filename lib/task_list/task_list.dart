@@ -25,7 +25,7 @@ class _TaskListState extends State<TaskList> {
         children: [
           CalendarTimeline(
             initialDate:provider.selectDate,
-            firstDate: DateTime.now()..subtract(Duration(days: 365)),
+            firstDate: DateTime.now().subtract(Duration(days: 365)),
             lastDate: DateTime.now().add(Duration(days: 365)),
             onDateSelected: (date) =>provider.getChangeDate(date),
             leftMargin: 10,
