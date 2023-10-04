@@ -3,6 +3,7 @@ import 'package:todo/auth/sign_up_screen.dart';
 import 'package:todo/components/custom_text_field.dart';
 import 'package:email_validator/email_validator.dart';
 
+import '../Home/Home_Screen.dart';
 import '../MyTheme.dart';
 class SignInScreen extends StatelessWidget {
   static const routeName = 'sign_in_screen';
@@ -65,7 +66,7 @@ class SignInScreen extends StatelessWidget {
                                 EdgeInsets.symmetric(vertical: 12))),
                         onPressed: () {
                           if(formKey.currentState?.validate()==true){
-
+                            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
                           }
                         },
                         child: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/Home/Home_Screen.dart';
 import 'package:todo/MyTheme.dart';
 import 'package:todo/auth/sign_in_screen.dart';
 import 'package:todo/components/custom_text_field.dart';
@@ -91,7 +92,9 @@ class SignUpScreen extends StatelessWidget {
                                 padding: MaterialStatePropertyAll(
                                     EdgeInsets.symmetric(vertical: 12))),
                             onPressed: () {
-                              if (formKey.currentState?.validate() == true) {}
+                              if (formKey.currentState?.validate() == true) {
+                                Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+                              }
                             },
                             child: Text(
                               "SIGN UP",
