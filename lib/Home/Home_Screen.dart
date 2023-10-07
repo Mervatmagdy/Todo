@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/MyTheme.dart';
+import 'package:todo/Provider/Auth_Provider.dart';
 import 'package:todo/Provider/app_config_provider.dart';
+import 'package:todo/auth/sign_in_screen.dart';
 import 'package:todo/setting/setting.dart';
 import 'package:todo/task_list/task_list.dart';
 
@@ -18,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int selected=0;
   @override
   Widget build(BuildContext context) {
+    var authProvider=Provider.of<AuthProvider>(context);
     var provider=Provider.of<AppConfigProvider>(context);
     List<Widget>tabs=[TaskList(),Setting()];
     return Scaffold(
@@ -55,9 +58,20 @@ class _HomeScreenState extends State<HomeScreen> {
               left: 0.0,
               right: 0.0,
               child: AppBar(
+                automaticallyImplyLeading:false,
+                actions: [
+                  Padding(
+                    padding:  EdgeInsets.only(bottom:60,left:20),
+                    child: IconButton(onPressed:(){
+                      provider.taskList=[];
+                      authProvider.myUser==null;
+                      Navigator.pushReplacementNamed(context,SignInScreen.routeName);
+                    }, icon:Icon(Icons.logout)),
+                  )
+                ],
                   title:Padding(
                     padding:  EdgeInsets.only(bottom:60,left:20),
-                    child: Text(AppLocalizations.of(context)!.to_do_title,style:Theme.of(context).textTheme.titleLarge,),
+                    child: Text(AppLocalizations.of(context)!.to_do_title+'\t'+'${authProvider.myUser!.name}',style:Theme.of(context).textTheme.titleLarge,),
                   ))),
           tabs[selected]
 

@@ -1,4 +1,5 @@
 class Task {
+  static const collectionName='Tasks';
   String? id;
   String? title;
   String? description;

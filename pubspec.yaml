@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore: ^4.9.2
   toast: ^0.3.0
   email_validator: ^2.1.16
+  firebase_auth: ^4.10.1
 
 dev_dependencies:
   flutter_test:

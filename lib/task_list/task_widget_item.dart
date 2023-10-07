@@ -7,6 +7,7 @@ import 'package:todo/MyTheme.dart';
 import 'package:todo/Provider/app_config_provider.dart';
 import 'package:todo/modal/firebase_utils.dart';
 import 'package:todo/modal/task.dart';
+import '../Provider/Auth_Provider.dart';
 import 'edit_task_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,10 +19,11 @@ class TaskWidgetItem extends StatefulWidget {
 }
 
 class _TaskWidgetItemState extends State<TaskWidgetItem> {
-
   @override
   Widget build(BuildContext context) {
-ToastContext().init(context);
+    var authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    ToastContext().init(context);
     var provider = Provider.of<AppConfigProvider>(context);
     return Padding(
       padding: EdgeInsets.all(9.0),
@@ -35,13 +37,17 @@ ToastContext().init(context);
             SlidableAction(
               borderRadius: BorderRadius.circular(20),
               onPressed: (tasks) {
-                FirebaseUtils.deleteTaskFromFireStore(widget.tasks).timeout(
-                  Duration(milliseconds:0),
-                  onTimeout: () {  Toast.show(AppLocalizations.of(context)!.task_delete, duration: Toast.lengthShort, gravity:  Toast.bottom);
-                  provider.getAllTaskFormFirebase();
-                  }
-                );
-
+                FirebaseUtils.deleteTaskFromFireStore(
+                        widget.tasks, authProvider.myUser!.id!).then((value){
+                Toast.show(AppLocalizations.of(context)!.task_delete,
+                duration: Toast.lengthShort, gravity: Toast.bottom);
+                    provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
+                }).
+                    timeout(Duration(milliseconds: 0), onTimeout: () {
+                  Toast.show(AppLocalizations.of(context)!.task_delete,
+                      duration: Toast.lengthShort, gravity: Toast.bottom);
+                  provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
+                });
               },
               backgroundColor: MyTheme.redColor,
               foregroundColor: MyTheme.whiteColor,
@@ -53,7 +59,8 @@ ToastContext().init(context);
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () {
-            Navigator.of(context).pushNamed(EditTaskItem.routeName,arguments:widget.tasks);
+            Navigator.of(context)
+                .pushNamed(EditTaskItem.routeName, arguments: widget.tasks);
           },
           child: Container(
             padding: EdgeInsets.all(15),
@@ -69,7 +76,9 @@ ToastContext().init(context);
               children: [
                 Container(
                   // margin: EdgeInsets.all(12),
-                  color:provider.isDone(widget.tasks)?MyTheme.greenColor:MyTheme.primaryColor,
+                  color: provider.isDone(widget.tasks)
+                      ? MyTheme.greenColor
+                      : MyTheme.primaryColor,
                   width: 4,
                   height: 80,
                 ),
@@ -83,7 +92,10 @@ ToastContext().init(context);
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .copyWith(color:provider.isDone(widget.tasks)?MyTheme.greenColor:MyTheme.primaryColor)),
+                                .copyWith(
+                                    color: provider.isDone(widget.tasks)
+                                        ? MyTheme.greenColor
+                                        : MyTheme.primaryColor)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
@@ -94,18 +106,33 @@ ToastContext().init(context);
                   ),
                 ),
                 ElevatedButton(
-                  onPressed:provider.isDone(widget.tasks)?null:() {
-                      FirebaseUtils.updateDoneTaskFormFireStore(widget.tasks).
-                      timeout(Duration(milliseconds:0),onTimeout:(){
-                        provider.getAllTaskFormFirebase();
-                      });
-                  },
-                  child: provider.isDone(widget.tasks)?
-                      Text(AppLocalizations.of(context)!.done,style:Theme.of(context).textTheme.titleSmall!.copyWith(color:MyTheme.greenColor,fontSize:22),):Icon(Icons.check, size: 30),
+                  onPressed: provider.isDone(widget.tasks)
+                      ? null
+                      : () {
+                          FirebaseUtils.updateDoneTaskFormFireStore(
+                                  widget.tasks, authProvider.myUser!.id!)
+                              .timeout(Duration(milliseconds: 0),
+                                  onTimeout: () {
+                            provider.getAllTaskFormFirebase(
+                                authProvider.myUser!.id!);
+                          });
+                        },
+                  child: provider.isDone(widget.tasks)
+                      ? Text(
+                          AppLocalizations.of(context)!.done,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(
+                                  color: MyTheme.greenColor, fontSize: 22),
+                        )
+                      : Icon(Icons.check, size: 30),
                   style: ButtonStyle(
-                    elevation: MaterialStatePropertyAll(0),
-                      backgroundColor:
-                          MaterialStatePropertyAll(provider.isDone(widget.tasks)?Colors.transparent:MyTheme.primaryColor),
+                      elevation: MaterialStatePropertyAll(0),
+                      backgroundColor: MaterialStatePropertyAll(
+                          provider.isDone(widget.tasks)
+                              ? Colors.transparent
+                              : MyTheme.primaryColor),
                       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(11)))),
                 ),

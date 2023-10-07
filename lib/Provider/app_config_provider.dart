@@ -9,8 +9,8 @@ class AppConfigProvider extends ChangeNotifier {
   // late Task task;
   List<Task> taskList = [];
   DateTime selectDate = DateTime.now();
-  Future<void> getAllTaskFormFirebase() async {
-    QuerySnapshot<Task> getTask = await FirebaseUtils.getTaskCollection().get();
+  Future<void> getAllTaskFormFirebase(String uId) async {
+    QuerySnapshot<Task> getTask = await FirebaseUtils.getTaskCollection(uId).get();
     taskList = getTask.docs.map((doc) {
       return doc.data();
     }).toList();
@@ -32,9 +32,9 @@ class AppConfigProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getChangeDate(DateTime newDate) {
+  void getChangeDate(DateTime newDate,String uId) {
     selectDate = newDate;
-    getAllTaskFormFirebase();
+    getAllTaskFormFirebase(uId);
   }
 
   bool isDone(Task task) {

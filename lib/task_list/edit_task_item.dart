@@ -7,6 +7,8 @@ import 'package:todo/Provider/app_config_provider.dart';
 import 'package:todo/modal/firebase_utils.dart';
 import 'package:todo/modal/task.dart';
 import 'package:flutter/services.dart';
+
+import '../Provider/Auth_Provider.dart';
 class EditTaskItem extends StatefulWidget {
   static const routeName = 'edit_task';
 
@@ -166,7 +168,7 @@ ToastContext().init(context);
     var chosenDate = await showDatePicker(
         context: context,
         initialDate:selectedDate,
-        firstDate: DateTime.now(),
+        firstDate: DateTime.now().subtract(Duration(days: 365)),
         lastDate: DateTime.now().add(Duration(days: 365)));
     selectedDate=chosenDate!;
     setState(() {
@@ -175,14 +177,20 @@ ToastContext().init(context);
   }
 
   void editTask() {
+    var authProvider=Provider.of<AuthProvider>(context,listen:false);
+
     if (formkey.currentState?.validate() == true) {
       args.title=title;
       args.description=description;
       args.dateTime=selectedDate;
-    FirebaseUtils.updateTaskFormFireStore(args).
+    FirebaseUtils.updateTaskFormFireStore(args,authProvider.myUser!.id!).then((value){
+      Toast.show(AppLocalizations.of(context)!.task_update_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
+      provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
+      Navigator.pop(context);
+    } ).
     timeout(Duration(milliseconds: 500),onTimeout:() {
       Toast.show(AppLocalizations.of(context)!.task_update_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
-      provider.getAllTaskFormFirebase();
+      provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
       Navigator.pop(context);
     },);
     setState(() {
