@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/MyTheme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo/Provider/Auth_Provider.dart';
 import 'package:todo/Provider/app_config_provider.dart';
 import 'package:todo/modal/firebase_utils.dart';
 import 'package:todo/modal/task.dart';
@@ -147,7 +148,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     var chosenDate = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime.now(),
+        firstDate: DateTime.now().subtract(Duration(days: 365)),
         lastDate: DateTime.now().add(Duration(days: 365)));
     if (chosenDate != null) {
       selectedDate = chosenDate;
@@ -155,17 +156,21 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   }
 
   void addTask() {
+    var authProvider=Provider.of<AuthProvider>(context,listen:false);
     if (formkey.currentState?.validate() == true) {
       Task task =
           Task(title: title, dateTime: selectedDate, description: description);
-      FirebaseUtils.addTaskToFireStore(task).timeout(
-        Duration(milliseconds: 500),
-        onTimeout: () {
-          Toast.show(AppLocalizations.of(context)!.task_added_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
-          provider.getAllTaskFormFirebase();
-          Navigator.pop(context);
-        },
-      );
+      FirebaseUtils.addTaskToFireStore(task,authProvider.myUser!.id!).then((value){
+        Toast.show(AppLocalizations.of(context)!.task_added_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
+        provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
+        Navigator.pop(context);
+      }).timeout(Duration(milliseconds:500),onTimeout:() {
+        Toast.show(AppLocalizations.of(context)!.task_added_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
+        provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
+        Navigator.pop(context);
+      },);
+
+      ;
 
     }
   }
