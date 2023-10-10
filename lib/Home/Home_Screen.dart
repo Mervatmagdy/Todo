@@ -66,6 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       provider.taskList=[];
                       authProvider.myUser==null;
                       AuthProvider.pref.setBool('account',false);
+                      provider.changeLanguage('en');
+                      provider.changeTheming(ThemeMode.light);
+
                       Navigator.pushReplacementNamed(context,SignInScreen.routeName);
                     }, icon:Icon(Icons.logout)),
                   )

@@ -54,7 +54,7 @@ class AppConfigProvider extends ChangeNotifier {
   }
 
   static getChangeLanguage() {
-    return prefs.getString('applanguage');
+    return  prefs.getString('applanguage');
   }
 
   static init() async {
@@ -82,7 +82,7 @@ class AppConfigProvider extends ChangeNotifier {
     }
   }
 
-  getChangeTheming() {
+  getChangeTheming(){
     if (prefs.getBool('apptheme') == true) {
       return ThemeMode.light;
     } else if (prefs.getBool('apptheme') == false) {
