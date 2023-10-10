@@ -38,7 +38,7 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
               borderRadius: BorderRadius.circular(20),
               onPressed: (tasks) {
                 FirebaseUtils.deleteTaskFromFireStore(
-                        widget.tasks, authProvider.myUser!.id!).then((value){
+                        widget.tasks,AuthProvider.pref.getString('id')!).then((value){
                 Toast.show(AppLocalizations.of(context)!.task_delete,
                 duration: Toast.lengthShort, gravity: Toast.bottom);
                     provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
@@ -46,7 +46,7 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
                     timeout(Duration(milliseconds: 0), onTimeout: () {
                   Toast.show(AppLocalizations.of(context)!.task_delete,
                       duration: Toast.lengthShort, gravity: Toast.bottom);
-                  provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
+                  provider.getAllTaskFormFirebase(AuthProvider.pref.getString('id')!);
                 });
               },
               backgroundColor: MyTheme.redColor,
@@ -110,11 +110,11 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
                       ? null
                       : () {
                           FirebaseUtils.updateDoneTaskFormFireStore(
-                                  widget.tasks, authProvider.myUser!.id!)
+                                  widget.tasks,AuthProvider.pref.getString('id')!)
                               .timeout(Duration(milliseconds: 0),
                                   onTimeout: () {
                             provider.getAllTaskFormFirebase(
-                                authProvider.myUser!.id!);
+                                AuthProvider.pref.getString('id')!);
                           });
                         },
                   child: provider.isDone(widget.tasks)

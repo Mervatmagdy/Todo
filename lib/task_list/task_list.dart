@@ -29,7 +29,7 @@ class _TaskListState extends State<TaskList> {
             initialDate:provider.selectDate,
             firstDate: DateTime.now().subtract(Duration(days: 365)),
             lastDate: DateTime.now().add(Duration(days: 365)),
-            onDateSelected: (date) =>provider.getChangeDate(date,authProvider.myUser!.id!),
+            onDateSelected: (date) =>provider.getChangeDate(date,AuthProvider.pref.getString('id')!),
             leftMargin: 10,
             monthColor: MyTheme.blackColor,
             dayColor: MyTheme.blackColor,

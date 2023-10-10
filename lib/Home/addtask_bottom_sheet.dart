@@ -160,13 +160,13 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     if (formkey.currentState?.validate() == true) {
       Task task =
           Task(title: title, dateTime: selectedDate, description: description);
-      FirebaseUtils.addTaskToFireStore(task,authProvider.myUser!.id!).then((value){
+      FirebaseUtils.addTaskToFireStore(task,AuthProvider.pref.getString('id')!).then((value){
         Toast.show(AppLocalizations.of(context)!.task_added_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
-        provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
+        provider.getAllTaskFormFirebase(AuthProvider.pref.getString('id')!);
         Navigator.pop(context);
       }).timeout(Duration(milliseconds:500),onTimeout:() {
         Toast.show(AppLocalizations.of(context)!.task_added_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
-        provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
+        provider.getAllTaskFormFirebase(AuthProvider.pref.getString('id')!);
         Navigator.pop(context);
       },);
 

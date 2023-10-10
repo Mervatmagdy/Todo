@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
+import 'package:todo/Home/Home_Screen.dart';
 import 'package:todo/MyTheme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/Provider/app_config_provider.dart';
@@ -183,15 +184,15 @@ ToastContext().init(context);
       args.title=title;
       args.description=description;
       args.dateTime=selectedDate;
-    FirebaseUtils.updateTaskFormFireStore(args,authProvider.myUser!.id!).then((value){
+    FirebaseUtils.updateTaskFormFireStore(args,AuthProvider.pref.getString('id')!).then((value){
       Toast.show(AppLocalizations.of(context)!.task_update_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
-      provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
-      Navigator.pop(context);
+      provider.getAllTaskFormFirebase(AuthProvider.pref.getString('id')!);
+      Navigator.of(context).pop(HomeScreen.routeName);
     } ).
     timeout(Duration(milliseconds: 500),onTimeout:() {
       Toast.show(AppLocalizations.of(context)!.task_update_success, duration: Toast.lengthShort, gravity:  Toast.bottom);
-      provider.getAllTaskFormFirebase(authProvider.myUser!.id!);
-      Navigator.pop(context);
+      provider.getAllTaskFormFirebase(AuthProvider.pref.getString('id')!);
+      Navigator.of(context).pop(HomeScreen.routeName);
     },);
     setState(() {
 

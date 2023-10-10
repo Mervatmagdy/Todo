@@ -50,11 +50,12 @@ class MyApp extends StatelessWidget {
         initialRoute:SplashScreen.routeName ,
         routes: {
           SplashScreen.routeName:(context) => SplashScreen(),
-          HomeScreen.routeName:(context) => HomeScreen(),
+
           SignInScreen.routeName:(context) => SignInScreen(),
           SignUpScreen.routeName:(context) => SignUpScreen(),
+          HomeScreen.routeName:(context) => HomeScreen(),
+          EditTaskItem.routeName:(context) => EditTaskItem(),
 
-          EditTaskItem.routeName:(context) => EditTaskItem()
         }
     );
   }
